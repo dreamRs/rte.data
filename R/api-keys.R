@@ -9,7 +9,7 @@
 #'
 #' @export
 #'
-#' @importFrom base64enc base64encode
+#' @importFrom jsonlite base64_enc
 #' @importFrom glue glue
 #'
 #' @examples
@@ -23,7 +23,7 @@
 #' }
 set_key <- function(api, key) {
   if (is.list(key))
-    key <- base64encode(charToRaw(paste(key$id_client, key$id_secret, sep = ":")))
+    key <- jsonlite::base64_enc(charToRaw(paste(key$id_client, key$id_secret, sep = ":")))
   api_key <- glue::glue(
     "RTE_DATA_{api}={key}",
     api = toupper(api),

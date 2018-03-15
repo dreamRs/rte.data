@@ -16,6 +16,5 @@ Imports:
     data.table,
     jsonlite,
     glue,
-    base64enc,
     ggplot2
 RoxygenNote: 6.0.1
