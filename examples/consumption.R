@@ -31,17 +31,7 @@ library( ggplot2 )
 short_term <- get_consumption("short_term", type = c("REALISED", "D-1"))
 short_term
 
-ggplot(data = short_term) +
-  geom_line(aes(x = start_date, y = value, color = type)) +
-  labs(
-    title = "French electricity consumption : forecast vs realised",
-    subtitle = paste("Poduced on", Sys.time())
-  ) +
-  theme_minimal()
-
-
-
-
+autoplot(short_term)
 
 
 

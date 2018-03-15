@@ -33,7 +33,7 @@ token <- get_token(
 )
 
 # or the base64 encoded key
-key <- "WFhYWFgtWFhYWFgtWFhYWFgtWFhYWFgtWFhYWFg="
+key <- "TGEgZGF0YXNjaWVuY2UgYXZlYyB1biBncmFuZCBS="
 token <- get_token(key)
 
 }

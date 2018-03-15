@@ -79,6 +79,7 @@ get_open_api <- function(api, resource, start_date = NULL, end_date = NULL, q = 
       user = proxy$user, pwd = proxy$proxy_pwd
     )
   }
+  api_time <- Sys.time()
   res <- cli$get(query = q)
   res$raise_for_status()
   txt <- res$parse("UTF-8")
@@ -86,5 +87,9 @@ get_open_api <- function(api, resource, start_date = NULL, end_date = NULL, q = 
   if (raw)
     return(json)
 
-  process_data(json)
+  data <- process_data(json)
+  class(data) <- c(class(data), "rte.data.table")
+  attr(data, "api.name") <- api
+  attr(data, "api.time") <- api_time
+  return(data)
 }
