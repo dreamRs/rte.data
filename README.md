@@ -9,7 +9,7 @@ rte.data
 Overview
 --------
 
-RTE, the french electricity transmission system operator, provides access to various data through an API on its \[data portal\](<https://data.rte-france.com/home>. You can retrieve those data with `rte.data`.
+RTE, the french electricity transmission system operator, provides access to various data through an API on its [data portal](https://data.rte-france.com/home). You can retrieve those data with `rte.data`.
 
 Installation (from Github) :
 
@@ -70,3 +70,18 @@ autoplot(balance)
 ```
 
 <img src="images/balance-1.png" width="864" />
+
+Actual generation
+-----------------
+
+Generation data aggregated by sector and produced per group (in MW) on an intradaily basis for net generation injected into the network.
+
+``` r
+prod_type <- get_actual_generation(
+  resource = "actual_generations_per_production_type", 
+  start_date = Sys.Date() - 1
+)
+autoplot(prod_type)
+```
+
+<img src="images/generation-1.png" width="864" />

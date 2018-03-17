@@ -20,13 +20,14 @@
 #'
 #' @importFrom ggplot2 autoplot ggplot aes_ geom_line labs theme_minimal
 #'  scale_color_brewer scale_x_datetime geom_ribbon scale_fill_manual
-#'  scale_color_manual waiver
-#' @importFrom data.table copy data.table
+#'  scale_color_manual waiver geom_area theme guide_legend
+#' @importFrom data.table copy data.table %chin%
 #'
 #' @examples
 #' # todo
 autoplot.rte.data.table <- function(object, ...) {
   api_name <- attr(object, "api.name")
+  api_resource <- attr(object, "api.resource")
 
   if (is.null(api_name))
     stop("No autoplot defined for this API !", call. = FALSE)
@@ -100,6 +101,48 @@ autoplot.rte.data.table <- function(object, ...) {
       scale_color_manual(values = c("firebrick", "goldenrod3"), name = "Flow") +
       scale_fill_manual(values = c("firebrick", "goldenrod3"), name = "Balance") +
       theme_minimal()
+
+  } else if (api_name == "actual_generation") {
+
+    if (api_resource == "actual_generations_per_production_type") {
+
+      object <- copy(object)
+      object <- object[production_type != "TOTAL"]
+      object[production_type %chin% c("HYDRO_RUN_OF_RIVER_AND_POUNDAGE", "HYDRO_WATER_RESERVOIR"), production_type := "HYDRO"]
+      object <- object[, list(value = sum(value)), by = list(production_type, start_date)]
+      object <- object[, group := factor(
+        x = production_type, levels = c("BIOMASS", "FOSSIL_GAS", "FOSSIL_HARD_COAL", "FOSSIL_OIL",
+                                        "HYDRO", "NUCLEAR", "SOLAR", "WASTE",
+                                        "WIND_ONSHORE", "HYDRO_PUMPED_STORAGE")
+      )]
+      object <- object[, group := as.numeric(group)]
+
+      ggplot(data = object) +
+        geom_area(aes_(x = ~start_date, y = ~value, fill = ~production_type, group = ~group), position = "stack") +
+        labs(
+          title = "French electricity generation per production type",
+          subtitle = paste("Poduced on", Sys.time()),
+          y = "Production (in MW)", x = NULL
+        ) +
+        scale_fill_manual(values = c(
+          "BIOMASS" = "#166a57",
+          "FOSSIL_GAS" = "#f30a0a",
+          "FOSSIL_HARD_COAL" = "#ac8c35",
+          "FOSSIL_OIL" = "#8356a2",
+          "HYDRO_PUMPED_STORAGE" = "#114774",
+          "HYDRO" = "#2772b2",
+          "NUCLEAR" = "#f8ca4c",
+          "SOLAR" = "#f27406",
+          "WASTE" = "#61380B",
+          "WIND_ONSHORE" = "#74cdb9"
+        ), guide = guide_legend(
+          title = "Production type", title.position = "top", title.hjust = 0.5,
+          nrow = 2, label.position = "bottom", keywidth = 5, keyheight = 0.5
+        )
+        ) +
+        theme_minimal() + theme(legend.position = "bottom")
+
+    }
 
   } else {
     stop("No autoplot defined for this API !", call. = FALSE)

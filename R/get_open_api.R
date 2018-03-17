@@ -51,12 +51,12 @@ get_open_api <- function(api, resource, start_date = NULL, end_date = NULL, q = 
 
   if (!is.null(start_date)) {
     if (is.null(end_date))
-      end_date <- Sys.Date() + 1
-    start_date <- as.POSIXct(start_date)
+      end_date <- Sys.Date()
+    start_date <- as.POSIXct(format(start_date))
     start_date <- format_datetime(start_date)
   }
   if (!is.null(end_date)) {
-    end_date <- as.POSIXct(end_date)
+    end_date <- as.POSIXct(format(end_date))
     end_date <- format_datetime(end_date)
   }
   q_ <- list(
@@ -91,6 +91,7 @@ get_open_api <- function(api, resource, start_date = NULL, end_date = NULL, q = 
   data <- process_data(json)
   setattr(data, "class", c(class(data), "rte.data.table"))
   setattr(data, "api.name", api)
+  setattr(data, "api.resource", resource)
   setattr(data, "api.time", api_time)
   return(data)
 }
