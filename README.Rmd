@@ -23,7 +23,7 @@ library("rte.data")
 
 ## Overview
 
-RTE, the french electricity transmission system operator, provides access to various data through an API on its (data portal)[https://data.rte-france.com/home]. You can retrieve those data with `rte.data`.
+RTE, the french electricity transmission system operator, provides access to various data through an API on its [data portal](https://data.rte-france.com/home. You can retrieve those data with `rte.data`.
 
 
 Installation (from Github) : 
@@ -39,7 +39,7 @@ devtools::installl_github("dreamRs/rte.data")
 
 ## Authentication
 
-To access the API, you need to (create an account)[https://data.rte-france.com/create_account], or login if you have one.
+To access the API, you need to [create an account](https://data.rte-france.com/create_account), or login if you have one.
 
 Once logged, you can subscribe (create an application) to the desired API (each APIs must be subscribed individualy), you'll obtain an `client id` and a `client secret` (or directly a base64 encoded key). Use those to get a token : 
 
