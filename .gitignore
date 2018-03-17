@@ -37,3 +37,7 @@ vignettes/*.pdf
 
 # testdata
 testdata/
+
+# dev
+dev/
+

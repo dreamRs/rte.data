@@ -16,8 +16,7 @@ get_actual_generation(resource = c("actual_generations_per_production_type",
 (hydraulic stock data) and \code{generation_mix_15min_time_scale}
 (production data realized from the global energy mix).}
 
-\item{start_date}{Optional, starting date to filter results,
-if used, \code{end_date} must be set as well.}
+\item{start_date}{Optional, starting date to filter results.}
 
 \item{end_date}{Optional, ending date to filter results.}
 

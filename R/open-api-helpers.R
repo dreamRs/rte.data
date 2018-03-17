@@ -11,17 +11,13 @@
 #'  (annual consumption forecasts).
 #' @param type Forecast type of consumption, one or several
 #' between 'REALISED', 'ID', 'D-1', 'D-2'.
-#' @param start_date Optional, starting date to filter results,
-#' if used, \code{end_date} must be set as well.
+#' @param start_date Optional, starting date to filter results.
 #' @param end_date Optional, ending date to filter results.
 #' @param token Token obtained with \code{\link{get_token}}.
 #' @param raw Return output from \code{fromJSON}.
 #'
 #' @return a \code{data.table}.
 #' @export
-#'
-#' @importFrom crul HttpClient proxy
-#' @importFrom jsonlite fromJSON
 #'
 #' @examples
 #' \dontrun{
@@ -68,17 +64,13 @@ get_consumption <- function(resource = c("short_term", "weekly_forecast", "annua
 #'  (production data realised by group), \code{water_reserves}
 #'  (hydraulic stock data) and \code{generation_mix_15min_time_scale}
 #'  (production data realized from the global energy mix).
-#' @param start_date Optional, starting date to filter results,
-#' if used, \code{end_date} must be set as well.
+#' @param start_date Optional, starting date to filter results.
 #' @param end_date Optional, ending date to filter results.
 #' @param token Token obtained with \code{\link{get_token}}.
 #' @param raw Return output from \code{fromJSON}.
 #'
 #' @return a \code{data.table}.
 #' @export
-#'
-#' @importFrom crul HttpClient proxy
-#' @importFrom jsonlite fromJSON
 #'
 #' @examples
 #' \dontrun{
@@ -111,3 +103,76 @@ get_actual_generation <- function(resource = c("actual_generations_per_productio
     raw = raw
   )
 }
+
+
+
+
+#' @title Retrieve physical flows data
+#'
+#' @description Data about physical cross-border schedules detailing
+#' electricity flows actually transiting across the interconnection
+#' lines directly linking countries.
+#'
+#' @param code_eic Optional, EIC code of the desired country.
+#' @param start_date Optional, starting date to filter results.
+#' @param end_date Optional, ending date to filter results.
+#' @param token Token obtained with \code{\link{get_token}}.
+#' @param raw Return output from \code{fromJSON}.
+#'
+#' @return a \code{data.table}.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#'
+#' # First you need a token
+#' id_client <- "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+#' id_secret <- "XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+#' token <- get_token(
+#'   key = list(id_client = id_client, id_secret = id_secret)
+#' )
+#'
+#' # Then you can retrieve flow data
+#' phys_flow <- get_physical_flows(token = token)
+#'
+#' }
+get_physical_flows <- function(code_eic = NULL, start_date = NULL, end_date = NULL, token = NULL, raw = FALSE) {
+  code_eic <- get_code_eic(code_eic)
+  get_open_api(
+    api = "physical_flow",
+    resource = "physical_flows",
+    start_date = start_date,
+    end_date = end_date,
+    q = list(country_eic_code = code_eic),
+    token = token,
+    raw = raw
+  )
+}
+
+get_code_eic <- function(x) {
+  if (is.null(x))
+    return(NULL)
+  eic <- c("10YFR-RTE------C",
+           "10YCB-GERMANY--8",
+           "10YGB----------A",
+           "10YBE----------2",
+           "10YES-REE------0",
+           "10YIT-GRTN-----B",
+           "10YCH-SWISSGRIDZ",
+           "10YDOM-REGION-1V")
+  code <- c("FR", "DE", "GB", "BE", "ES", "IT", "CH", "CWE")
+  if (x %in% code) {
+    eic[which(code == x)]
+  } else if (x %in% eic) {
+    eic
+  } else {
+    stop("Unknown EIC code.")
+  }
+}
+
+
+
+
+
+
+

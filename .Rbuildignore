@@ -1,4 +1,5 @@
 ^rte\.data\.Rproj$
 ^\.Rproj\.user$
 ^examples$
+^dev
 ^\.travis\.yml$

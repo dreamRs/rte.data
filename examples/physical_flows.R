@@ -13,7 +13,7 @@
 # Packages ----------------------------------------------------------------
 
 library( rte.data )
-library( ggplot2 )
+
 
 
 
@@ -29,18 +29,18 @@ library( ggplot2 )
 
 # Physical flows ----------------------------------------------------------
 
-physfl <- get_open_api(api = "physical_flow", resource = "physical_flows")
-physfl
 
-physfl_a <- physfl[, list(value = sum(value)), by = list(from = sender_country_name, to = receiver_country_name)]
-physfl_a
+# commercial balance for France on electricity market
+balance <- get_physical_flows(start_date = "2018-02-01", end_date = "2018-03-15")
+autoplot(balance)
 
-physfl_a[, type := ifelse(to == "France", "Imports", "Exports")]
-physfl_a[, country := ifelse(to == "France", from, to)]
-physfl_a[type == "Imports", value := -value]
-physfl_a
 
-ggplot(data = physfl_a) +
-  geom_col(aes(x = country, y = value, fill = type))
+
+
+
+
+
+
+
 
 

@@ -35,3 +35,8 @@ autoplot(short_term)
 
 
 
+short_term <- get_consumption("short_term", type = c("REALISED", "D-1"), start_date = Sys.Date() - 7)
+short_term
+
+autoplot(short_term)
+

@@ -17,8 +17,7 @@ get_consumption(resource = c("short_term", "weekly_forecast",
 \item{type}{Forecast type of consumption, one or several
 between 'REALISED', 'ID', 'D-1', 'D-2'.}
 
-\item{start_date}{Optional, starting date to filter results,
-if used, \code{end_date} must be set as well.}
+\item{start_date}{Optional, starting date to filter results.}
 
 \item{end_date}{Optional, ending date to filter results.}
 

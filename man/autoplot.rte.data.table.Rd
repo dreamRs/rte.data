@@ -4,10 +4,12 @@
 \alias{autoplot.rte.data.table}
 \title{Autplot method}
 \usage{
-\method{autoplot}{rte.data.table}(object)
+\method{autoplot}{rte.data.table}(object, ...)
 }
 \arguments{
-\item{object}{A \code{rte.data.table} obtained from the API.}
+\item{object}{a \code{rte.data.table} obtained from the API.}
+
+\item{...}{other arguments passed to specific methods}
 }
 \value{
 A ggplot object.

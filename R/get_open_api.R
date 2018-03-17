@@ -22,6 +22,7 @@
 #'
 #' @importFrom crul HttpClient proxy
 #' @importFrom jsonlite fromJSON
+#' @importFrom data.table setattr
 #'
 #' @examples
 #' \dontrun{
@@ -50,7 +51,7 @@ get_open_api <- function(api, resource, start_date = NULL, end_date = NULL, q = 
 
   if (!is.null(start_date)) {
     if (is.null(end_date))
-      stop("If start_date is set, end_date must be passed as well.", call. = FALSE)
+      end_date <- Sys.Date() + 1
     start_date <- as.POSIXct(start_date)
     start_date <- format_datetime(start_date)
   }
@@ -88,8 +89,8 @@ get_open_api <- function(api, resource, start_date = NULL, end_date = NULL, q = 
     return(json)
 
   data <- process_data(json)
-  class(data) <- c(class(data), "rte.data.table")
-  attr(data, "api.name") <- api
-  attr(data, "api.time") <- api_time
+  setattr(data, "class", c(class(data), "rte.data.table"))
+  setattr(data, "api.name", api)
+  setattr(data, "api.time", api_time)
   return(data)
 }
