@@ -14,6 +14,7 @@
 
 library( rte.data )
 library( ggplot2 )
+library(data.table)
 
 
 
@@ -33,15 +34,7 @@ library( ggplot2 )
 prod_type <- get_actual_generation("actual_generations_per_production_type")
 prod_type
 
-
-ggplot(data = prod_type[production_type != "TOTAL"]) +
-  geom_line(aes(x = start_date, y = value, color = production_type)) +
-  labs(
-    title = "French electricity generation per production type",
-    subtitle = paste("Poduced on", Sys.time())
-  ) +
-  theme_minimal()
-
+autoplot(prod_type)
 
 
 # Data since early 2018
@@ -52,17 +45,16 @@ prod_type_h <- get_actual_generation(
 )
 prod_type_h
 
+
+
 prod_type_h_day <- prod_type_h[
   production_type != "TOTAL",
   list(value = mean(value)),
   by = list(start_date = as.Date(start_date), production_type)
 ]
-prod_type_h_day
+setattr(prod_type_h_day, "api.name", attr(prod_type_h, "api.name"))
+setattr(prod_type_h_day, "api.resource", attr(prod_type_h, "api.resource"))
+setattr(prod_type_h_day, "api.time", attr(prod_type_h, "api.time"))
 
-ggplot(data = prod_type_h_day) +
-  geom_col(aes(x = start_date, y = value, fill = production_type), position = "stack") +
-  labs(
-    title = "French electricity generation per production type",
-    subtitle = paste("Poduced on", Sys.time())
-  ) +
-  theme_minimal() + theme(legend.position = "bottom")
+autoplot(prod_type_h_day)
+

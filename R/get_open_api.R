@@ -1,11 +1,11 @@
 
 #' @title Retrieve data from an open API
 #'
-#' @description Several APIs are available, each one
-#'  must be subscribed individually, this function allows
-#'  to retrieve the data of an API, it is necessary for
-#'  this purpose the name of this one and the name of the
-#'  resource (information available on the page of the
+#' @description Several APIs are available, create an application
+#'  and attach APIs to it, this function allows
+#'  to retrieve data from any API, you'll need
+#'  its name and the name of the
+#'  resource (informations available on the page of the
 #'  API on https://data.rte-france.com).
 #'
 #' @param api Name of main API.

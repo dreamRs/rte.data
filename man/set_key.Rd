@@ -12,7 +12,7 @@ set_key(api, key)
 \item{key}{a base64 encoded string or a list containing
 'client_id' and 'client_secret'. To get those credentials
 you need an account on \url{https://data.rte-france.com} and
-to create an application for the concerned API.}
+attach the concerned API to an application.}
 }
 \description{
 Set a key for a specific API
