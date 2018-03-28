@@ -29,6 +29,8 @@ autoplot.rte.data.table <- function(object, ...) {
   api_name <- attr(object, "api.name")
   api_resource <- attr(object, "api.resource")
 
+  args <- list(...)
+
   if (is.null(api_name))
     stop("No autoplot defined for this API !", call. = FALSE)
 
@@ -61,8 +63,10 @@ autoplot.rte.data.table <- function(object, ...) {
     dd <- as.numeric(dd)
     if (dd > 7) {
       object <- object[, list(value = sum(value)), by = list(start_date = as.Date(format(start_date)), type)]
+      offset <- 24
     } else {
       object <- object[, list(value = sum(value)), by = list(start_date, type)]
+      offset <- 1
     }
 
     ggplot(data = object) +
@@ -83,7 +87,7 @@ autoplot.rte.data.table <- function(object, ...) {
         yp <- x1[intp] + (x1s * (xp - intp))
         if (length(xp) > 0) {
           addin <- data.table(
-            start_date = rep(as.POSIXct(format(min(data$start_date))) + (xp - 1) * 60 * 60 * 24, each = 2),
+            start_date = rep(as.POSIXct(format(min(data$start_date))) + (xp - 1) * 60 * 60 * offset, each = 2),
             ymin = rep(yp, each = 2), ymax = rep(yp, each = 2),
             fill = rep(c("in favour", "against"), times = 2),
             diff = rep(0, each = 2)
@@ -106,8 +110,13 @@ autoplot.rte.data.table <- function(object, ...) {
 
     if (api_resource == "actual_generations_per_production_type") {
 
+      api_time <- attr(object, "api.time")
+
       object <- copy(object)
       object <- object[production_type != "TOTAL"]
+      if (!is.null(args$by_day) && args$by_day) {
+        object <- object[, list(value = mean(value)), by = list(start_date = as.Date(start_date), production_type)]
+      }
       object[production_type %chin% c("HYDRO_RUN_OF_RIVER_AND_POUNDAGE", "HYDRO_WATER_RESERVOIR"), production_type := "HYDRO"]
       object <- object[, list(value = sum(value)), by = list(production_type, start_date)]
       object <- object[, group := factor(
@@ -117,28 +126,38 @@ autoplot.rte.data.table <- function(object, ...) {
       )]
       object <- object[, group := as.numeric(group)]
 
+
+
       ggplot(data = object) +
         geom_area(aes_(x = ~start_date, y = ~value, fill = ~production_type, group = ~group), position = "stack") +
         labs(
           title = "French electricity generation per production type",
-          subtitle = paste("Poduced on", Sys.time()),
+          subtitle = paste("Poduced on", format(api_time, format = "%Y-%m-%d %H:%M")),
           y = "Production (in MW)", x = NULL
         ) +
-        scale_fill_manual(values = c(
-          "BIOMASS" = "#166a57",
-          "FOSSIL_GAS" = "#f30a0a",
-          "FOSSIL_HARD_COAL" = "#ac8c35",
-          "FOSSIL_OIL" = "#8356a2",
-          "HYDRO_PUMPED_STORAGE" = "#114774",
-          "HYDRO" = "#2772b2",
-          "NUCLEAR" = "#f8ca4c",
-          "SOLAR" = "#f27406",
-          "WASTE" = "#61380B",
-          "WIND_ONSHORE" = "#74cdb9"
-        ), guide = guide_legend(
-          title = "Production type", title.position = "top", title.hjust = 0.5,
-          nrow = 2, label.position = "bottom", keywidth = 5, keyheight = 0.5
-        )
+        scale_fill_manual(
+          values = c(
+            "BIOMASS" = "#166a57",
+            "FOSSIL_GAS" = "#f30a0a",
+            "FOSSIL_HARD_COAL" = "#ac8c35",
+            "FOSSIL_OIL" = "#8356a2",
+            "HYDRO_PUMPED_STORAGE" = "#114774",
+            "HYDRO" = "#2772b2",
+            "NUCLEAR" = "#f8ca4c",
+            "SOLAR" = "#f27406",
+            "WASTE" = "#61380B",
+            "WIND_ONSHORE" = "#74cdb9"
+          ), guide = guide_legend(
+            title = "Production type", title.position = "top", title.hjust = 0,
+            nrow = 2, label.position = "bottom", keywidth = 6, keyheight = 0.5
+          ),
+          labels = function(x) {
+            lo <- substring(text = x, first = 2)
+            up <- substring(text = x, first = 1, last = 1)
+            lo <- tolower(lo)
+            lo <- gsub(pattern = "_", replacement = " ", x = lo)
+            paste0(up, lo)
+          }
         ) +
         theme_minimal() + theme(legend.position = "bottom")
 

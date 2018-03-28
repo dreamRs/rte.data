@@ -19,7 +19,7 @@ get_physical_flows(code_eic = NULL, start_date = NULL, end_date = NULL,
 \item{raw}{Return output from \code{fromJSON}.}
 }
 \value{
-a \code{data.table}.
+a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 }
 \description{
 Data about physical cross-border schedules detailing

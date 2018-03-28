@@ -17,7 +17,7 @@
 #' @param token Token obtained with \code{\link{get_token}}.
 #' @param raw Return output from \code{fromJSON}.
 #'
-#' @return a \code{data.table}.
+#' @return a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 #' @export
 #'
 #' @importFrom crul HttpClient proxy

@@ -77,11 +77,12 @@ Actual generation
 Generation data aggregated by sector and produced per group (in MW) on an intradaily basis for net generation injected into the network.
 
 ``` r
-prod_type <- get_actual_generation(
-  resource = "actual_generations_per_production_type", 
-  start_date = Sys.Date() - 1
+prod_type_30 <- get_actual_generation(
+  resource = "actual_generations_per_production_type",
+  start_date = Sys.Date() - 30, end_date = Sys.Date()
 )
-autoplot(prod_type)
+
+autoplot(prod_type_30, by_day = TRUE)
 ```
 
 <img src="images/generation-1.png" width="864" />

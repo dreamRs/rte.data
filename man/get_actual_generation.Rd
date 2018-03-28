@@ -25,7 +25,7 @@ get_actual_generation(resource = c("actual_generations_per_production_type",
 \item{raw}{Return output from \code{fromJSON}.}
 }
 \value{
-a \code{data.table}.
+a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 }
 \description{
 Production data aggregated by sector and group

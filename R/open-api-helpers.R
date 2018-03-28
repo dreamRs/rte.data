@@ -16,7 +16,7 @@
 #' @param token Token obtained with \code{\link{get_token}}.
 #' @param raw Return output from \code{fromJSON}.
 #'
-#' @return a \code{data.table}.
+#' @return a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 #' @export
 #'
 #' @examples
@@ -69,7 +69,7 @@ get_consumption <- function(resource = c("short_term", "weekly_forecast", "annua
 #' @param token Token obtained with \code{\link{get_token}}.
 #' @param raw Return output from \code{fromJSON}.
 #'
-#' @return a \code{data.table}.
+#' @return a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 #' @export
 #'
 #' @examples
@@ -119,7 +119,7 @@ get_actual_generation <- function(resource = c("actual_generations_per_productio
 #' @param token Token obtained with \code{\link{get_token}}.
 #' @param raw Return output from \code{fromJSON}.
 #'
-#' @return a \code{data.table}.
+#' @return a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 #' @export
 #'
 #' @examples

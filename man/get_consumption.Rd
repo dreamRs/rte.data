@@ -26,7 +26,7 @@ between 'REALISED', 'ID', 'D-1', 'D-2'.}
 \item{raw}{Return output from \code{fromJSON}.}
 }
 \value{
-a \code{data.table}.
+a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 }
 \description{
 Data on French electricity consumption in real time.

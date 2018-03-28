@@ -40,3 +40,15 @@ short_term
 
 autoplot(short_term)
 
+
+
+
+# Weekly forecast ---------------------------------------------------------
+
+# weekly_forecast <- get_consumption("weekly_forecast", type = c("REALISED", "D-1"))
+# weekly_forecast
+#
+# weekly_forecast <- get_consumption("weekly_forecast")
+
+weekly_forecast <- get_open_api(api = "consumption", resource = "weekly_forecast")
+

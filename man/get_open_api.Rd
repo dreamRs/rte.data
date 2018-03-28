@@ -24,7 +24,7 @@ if used, \code{end_date} must be set as well.}
 \item{raw}{Return output from \code{fromJSON}.}
 }
 \value{
-a \code{data.table}.
+a \code{data.table} or a \code{list} if \code{raw = TRUE}.
 }
 \description{
 Several APIs are available, create an application
