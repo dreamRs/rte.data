@@ -35,7 +35,8 @@ balance <- get_physical_flows(start_date = "2018-02-01", end_date = "2018-03-15"
 autoplot(balance)
 
 
-
+# Exchange by countries
+autoplot(balance, by_country = TRUE)
 
 
 

@@ -1,5 +1,5 @@
 Package: rte.data
-Version: 0.0.0.9120
+Version: 0.0.0.9150
 Title: Access RTE Data Api
 Description: RTE (french electricity transmission system operator) 
   provides access to a wide range of data via APIs available on its 
