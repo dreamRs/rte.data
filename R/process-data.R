@@ -24,9 +24,8 @@ process_data <- function(json) {
     data[, start_date := NULL]
     data[, end_date := NULL]
     data <- merge(x = data, y = values, by = ".id", all.x = TRUE, all.y = TRUE)
-    data <- data[, start_date := parse_datetime(start_date)]
-    data <- data[, end_date := parse_datetime(end_date)]
-    data <- data[, updated_date := parse_datetime(updated_date)]
+    var_dates <- grep(pattern = "_date", x = names(data), value = TRUE)
+    data <- data[, (var_dates) := lapply(.SD, parse_datetime), .SDcols = var_dates]
     data <- data[, .id := NULL]
   }
   data
