@@ -109,13 +109,7 @@ autoplot.rte.data.table <- function(object, ...) {
             title = "Production type", title.position = "top", title.hjust = 0,
             nrow = 2, label.position = "bottom", keywidth = 6, keyheight = 0.5
           ),
-          labels = function(x) {
-            lo <- substring(text = x, first = 2)
-            up <- substring(text = x, first = 1, last = 1)
-            lo <- tolower(lo)
-            lo <- gsub(pattern = "_", replacement = " ", x = lo)
-            paste0(up, lo)
-          }
+          labels = capitalize
         ) +
         theme_minimal() +
         theme(legend.position = "bottom",

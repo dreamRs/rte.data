@@ -29,6 +29,7 @@ library( ggplot2 )
 # Short term consumption forecast -----------------------------------------
 
 short_term <- get_consumption("short_term", type = c("REALISED", "D-1"))
+str(short_term)
 short_term
 
 autoplot(short_term)

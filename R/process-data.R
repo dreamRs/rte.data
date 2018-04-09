@@ -13,9 +13,10 @@ process_data <- function(json) {
     data[["production_unit"]] <- NULL
     data <- cbind(data, production_unit)
   }
-  data <- as.data.table(data)
-  if (!is.null(data[["updated_date"]])) {
-    data <- data[, updated_date := parse_datetime(updated_date)]
+  if (is.data.frame(data$values)) {
+    data <- as.data.table(data$values)
+  } else {
+    data <- as.data.table(data)
   }
   if (!is.null(data$values)) {
     values <- rbindlist(l = data$values, idcol = TRUE, fill = TRUE)
@@ -24,10 +25,10 @@ process_data <- function(json) {
     data[, start_date := NULL]
     data[, end_date := NULL]
     data <- merge(x = data, y = values, by = ".id", all.x = TRUE, all.y = TRUE)
-    var_dates <- grep(pattern = "_date", x = names(data), value = TRUE)
-    data <- data[, (var_dates) := lapply(.SD, parse_datetime), .SDcols = var_dates]
     data <- data[, .id := NULL]
   }
+  var_dates <- grep(pattern = "_date$", x = names(data), value = TRUE)
+  data <- data[, (var_dates) := lapply(.SD, parse_datetime), .SDcols = var_dates]
   data
 }
 
