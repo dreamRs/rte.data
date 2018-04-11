@@ -91,7 +91,8 @@ autoplot.rte.data.table <- function(object, ...) {
         labs(
           title = "French electricity generation per production type",
           subtitle = paste("Poduced on", format(api_time, format = "%Y-%m-%d %H:%M")),
-          y = "Production (in MW)", x = NULL
+          y = "Production (in MW)", x = NULL,
+          caption = "https://data.rte-france.com"
         ) +
         scale_fill_manual(
           values = c(
