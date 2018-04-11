@@ -39,5 +39,5 @@ vignettes/*.pdf
 testdata/
 
 # dev
-dev/
-
+dev/*.pdf
+dev/*.rds
