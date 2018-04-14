@@ -71,6 +71,12 @@ autoplot(balance)
 
 <img src="images/balance-1.png" width="864" />
 
+``` r
+autoplot(balance, by_country = TRUE)
+```
+
+<img src="images/balance-2.png" width="864" />
+
 Actual generation
 -----------------
 

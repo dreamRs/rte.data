@@ -215,15 +215,15 @@ plot_exchange <- function(object) {
   object <- object[order(country)]
 
   ggplot(data = object) +
-    geom_col(mapping = aes_(x = ~country, y = ~value, fill = ~flow)) +
+    geom_col(mapping = aes_(x = ~country, y = ~value/1e3, fill = ~flow)) +
     geom_hline(yintercept = 0, lty = "longdash", size = 1) +
     scale_fill_manual(values = c("firebrick", "goldenrod3"), name = "Flow") +
-    scale_y_continuous(limits = c(-max(abs(object$value)), max(abs(object$value)))) +
+    scale_y_continuous(limits = c(-max(abs(object$value)), max(abs(object$value)))/1e3) +
     labs(
       title = "Exchanges with neighbouring countries",
       subtitle = range_dat,
       caption = "https://data.rte-france.com",
-      x = NULL, y = "Physical flows (MW)"
+      x = NULL, y = "Physical flows (GW)"
     ) +
     theme_minimal() +
     coord_flip() +
