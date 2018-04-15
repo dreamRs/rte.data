@@ -92,3 +92,13 @@ autoplot(prod_type_30, by_day = TRUE)
 ```
 
 <img src="images/generation-1.png" width="864" />
+
+Active production units
+-----------------------
+
+``` r
+active_units <- retrieve_active_units()
+autoplot(active_units)
+```
+
+<img src="images/active-units-1.png" width="864" />

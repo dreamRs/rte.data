@@ -143,8 +143,8 @@ prodgen[, list(
 
 # unit stoped
 prodgen[, list(
-  working = sum(prod_max >= 1),
-  stop = sum(prod_max < 1),
+  working = sum(prod_max > 1),
+  stop = sum(prod_max <= 1),
   n_unit = .N
 ), by = type]
 
@@ -162,26 +162,28 @@ library(ggplot2)
 prodgen[type %chin% c("HYDRO_RUN_OF_RIVER_AND_POUNDAGE", "HYDRO_WATER_RESERVOIR"), type := "HYDRO"]
 percent_prod <- prodgen[, list(
   working = round(sum(prod_max, na.rm = TRUE) / sum(installed_capacity, na.rm = TRUE) * 100, 2),
-  stopped = 100 - round(sum(prod_max, na.rm = TRUE) / sum(installed_capacity, na.rm = TRUE) * 100, 2)
+  stopped = 100 - round(sum(prod_max, na.rm = TRUE) / sum(installed_capacity, na.rm = TRUE) * 100, 2),
+  n= .N
 ), by = type]
-percent_prod <- melt(data = percent_prod, id.vars = "type")
+percent_prod <- melt(data = percent_prod, id.vars = c("type", "n"), measure.vars = c("working", "stopped"))
 percent_prod[, variable := factor(x = variable, levels = c("stopped", "working"))]
 percent_prod <- percent_prod[is.finite(value)]
 percent_prod[value < 0, value := 0]
+percent_prod[value > 100, value := 100]
 
 ggplot(data = percent_prod) +
   geom_col(mapping = aes(x = type, y = value, fill = variable), position = "fill", width = 0.5, show.legend = FALSE) +
   geom_point(mapping = aes(x = NA_character_, y = NA_real_, colour = variable), na.rm = TRUE) +
   geom_text(
     # position = "fill",
-    mapping = aes(label = paste(rte.data:::capitalize(type), paste0(value, "%"), sep = " : "), x = type, y = 0),
+    mapping = aes(label = paste(rte.data:::capitalize(type), paste0(round(value, 1), "% (n=", n, ")"), sep = " : "), x = type, y = 0),
     hjust = 0, nudge_x = 0.5, size = 4.5,
     color = "black", data = percent_prod[variable == "working"]
   ) +
   coord_flip() + theme_minimal() +
   theme(legend.position = "bottom") +
   labs(
-    title = "Proportion of active units by branche",
+    title = "Proportion of active units by branch",
     fill = NULL, y = NULL, x = NULL, colour = NULL,
     caption = "https://data.rte-france.com"
   ) +
@@ -208,3 +210,24 @@ ggplot(data = percent_prod) +
     mapping = aes(label = paste0(value, "%"), x = type, y = 0.1), #hjust = 1.1,
     color = "snow", data = percent_prod[variable == "working"]
   )
+
+
+
+
+
+
+
+
+
+# Test fun ----------------------------------------------------------------
+
+library(rte.data)
+library(data.table)
+
+dat <- retrieve_active_units()
+dat
+
+dat[name %chin% "TRICASTIN 1"]
+
+autoplot(dat)
+

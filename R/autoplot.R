@@ -118,6 +118,10 @@ autoplot.rte.data.table <- function(object, ...) {
 
     }
 
+  } else if (api_name == "retrieve_active_units") {
+
+    plot_p_active_units(object)
+
   } else {
     stop("No autoplot defined for this API !", call. = FALSE)
   }

@@ -102,3 +102,11 @@ autoplot(prod_type_30, by_day = TRUE)
 ```
 
 
+
+## Active production units 
+
+```{r active-units}
+active_units <- retrieve_active_units()
+autoplot(active_units)
+```
+

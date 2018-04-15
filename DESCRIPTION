@@ -1,5 +1,5 @@
 Package: rte.data
-Version: 0.0.0.9160
+Version: 0.0.0.9170
 Title: Access RTE Data Api
 Description: RTE (french electricity transmission system operator) 
   provides access to a wide range of data via APIs available on its 
@@ -10,11 +10,13 @@ License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
+Depends: R (>= 2.10)
 Imports: 
     curl,
     crul,
     data.table,
     jsonlite,
     glue,
-    ggplot2
+    ggplot2,
+    scales
 RoxygenNote: 6.0.1
