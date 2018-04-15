@@ -41,3 +41,5 @@ testdata/
 # dev
 dev/*.pdf
 dev/*.rds
+dev/shapefiles/
+
