@@ -49,24 +49,9 @@ active_unit <- merge(
 library( rgdal )
 library( sp )
 
-# download.file(
-#   url = "http://osm13.openstreetmap.fr/~cquest/openfla/export/departements-20140306-100m-shp.zip",
-#   destfile = "dev/shapefiles/departements-20140306-100m-shp.zip"
-# )
-# unzip(
-#   zipfile = "dev/shapefiles/departements-20140306-100m-shp.zip",
-#   exdir = "dev/shapefiles/departements-20140306-100m-shp"
-# )
-# fra_dept <- readOGR(
-#   dsn = "dev/shapefiles/departements-20140306-100m-shp",
-#   layer = "departements-20140306-100m", stringsAsFactors = FALSE
-# )
-# fra_dept <- fra_dept[fra_dept@data$code_insee %in% sprintf("%02d", (1:95)[-20]), ]
-# fra_dept <- fortify(fra_dept, region = "code_insee")
-# saveRDS(fra_dept, file = "dev/fra_dept.rds")
-
-
 fra_dept <- readRDS(file = "dev/fra_dept.rds")
+europe <- readRDS(file = "dev/europe.rds")
+
 
 
 
@@ -176,8 +161,6 @@ ggplot(data = fra_dept) +
 
 # Map: Europe background --------------------------------------------------
 
-europe <- readRDS(file = "dev/europe.rds")
-
 
 ggplot(fra_dept) +
   geom_polygon(
@@ -195,8 +178,13 @@ ggplot(fra_dept) +
     data = active_unit_p, size = 5,
     mapping = aes(x = longitude, y = latitude, color = active_cat)
   ) +
-  scale_color_brewer(
-    palette = "RdYlGn", direction = 1, drop = FALSE,
+  # scale_color_brewer(
+  #   palette = "RdYlGn", direction = 1, drop = FALSE,
+  #   guide = guide_legend(title = "% of active units", title.position = "top")
+  # ) +
+  scale_color_manual(
+    values = c("0%" = "#E31A1C", "25%" = "#FB9A99", "50%"= "#FDBF6F", "75%" = "#B2DF8A", "100%" = "#33A02C"),
+    drop = FALSE,
     guide = guide_legend(title = "% of active units", title.position = "top")
   ) +
   coord_map(

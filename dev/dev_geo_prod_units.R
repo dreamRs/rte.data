@@ -138,5 +138,43 @@ leaflet(geo_fossil_gas) %>%
   addTiles() %>%
   addMarkers(lng = ~longitude, lat = ~latitude)
 
+library(leaflet)
+leaflet(geo_fossil_gas[location == "Centrale Thermique FR-GA-MORANT1"]) %>%
+  addTiles() %>%
+  addMarkers(lng = ~longitude, lat = ~latitude)
+
+
+
+
+
+
+# Via Open Power System Data ----------------------------------------------
+
+input_plant_locations <- fread(input = "data-raw/input_plant_locations_FR.csv")
+
+length(dat$name)
+length(intersect(input_plant_locations$name, dat$name))
+length(intersect(input_plant_locations$eic_code, dat$eic_parent))
+length(intersect(input_plant_locations$eic_code, dat$eic_code))
+
+dat_loc <- merge(
+  x = dat, all.x = TRUE, all.y = FALSE,
+  y = input_plant_locations[, list(eic_parent = eic_code, lat, lon)]
+)
+
+library(leaflet)
+factpal <- colorFactor(RColorBrewer::brewer.pal(n = 8, name = "Dark2"), unique(dat_loc$type))
+leaflet(dat_loc[!is.na(lat)]) %>%
+  addTiles() %>%
+  addCircleMarkers(
+    lng = ~lon, lat = ~lat,
+    fillColor = ~factpal(type),
+    color = ~factpal(type),
+    fillOpacity = 1,
+    popup = ~type
+  )
+
+
+
 
 

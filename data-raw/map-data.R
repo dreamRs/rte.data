@@ -48,3 +48,27 @@ plot(europe)
 europe <- fortify(europe, region = "ADMIN")
 saveRDS(europe, file = "dev/europe.rds")
 
+
+
+
+# France departement ------------------------------------------------------
+
+download.file(
+  url = "http://osm13.openstreetmap.fr/~cquest/openfla/export/departements-20140306-100m-shp.zip",
+  destfile = "dev/shapefiles/departements-20140306-100m-shp.zip"
+)
+unzip(
+  zipfile = "dev/shapefiles/departements-20140306-100m-shp.zip",
+  exdir = "dev/shapefiles/departements-20140306-100m-shp"
+)
+fra_dept <- readOGR(
+  dsn = "dev/shapefiles/departements-20140306-100m-shp",
+  layer = "departements-20140306-100m", stringsAsFactors = FALSE
+)
+fra_dept <- fra_dept[fra_dept@data$code_insee %in% sprintf("%02d", (1:95)[-20]), ]
+fra_dept <- fortify(fra_dept, region = "code_insee")
+saveRDS(fra_dept, file = "dev/fra_dept.rds")
+
+
+
+
