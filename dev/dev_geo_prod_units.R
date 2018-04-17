@@ -175,6 +175,6 @@ leaflet(dat_loc[!is.na(lat)]) %>%
   )
 
 
-
+dat_loc[!is.na(lat), .N, by = type]
 
 

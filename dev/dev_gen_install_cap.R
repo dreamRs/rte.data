@@ -77,6 +77,23 @@ table(gen_inst_unit$type)
 
 # saveRDS(object = gen_inst_unit, file = "dev/gen_inst_unit.rds")
 
+gen_inst_unit[type %chin% c("HYDRO_RUN_OF_RIVER_AND_POUNDAGE", "HYDRO_WATER_RESERVOIR"), type := "HYDRO"]
+gen_inst_unit_a <- gen_inst_unit[, list(N = .N), by = type]
+gen_inst_unit_a <- gen_inst_unit_a[order(N, decreasing = FALSE)]
+gen_inst_unit_a[, type := factor(type, levels = type, labels = rte.data:::capitalize(type))]
+gen_inst_unit_a[, P := round(N / sum(N) * 100)]
+gen_inst_unit_a
+
+ggplot(data = gen_inst_unit_a) +
+  geom_segment(aes(x = type, xend = type, y = 0, yend = N), color = "#666666") +
+  geom_point(aes(x = type, y = N), color = "#112446", size = 5) +
+  coord_flip() + theme_minimal() +
+  labs(
+    x = NULL, y = "Number of unit",
+    title = "Installed capacity",
+    subtitle = "per production type"
+  )
+
 
 
 
@@ -94,6 +111,7 @@ gen_inst_type[type %chin% c("WIND_ONSHORE", "WIND_OFFSHORE"), type := "WIND"]
 gen_inst_type <- gen_inst_type[, list(value = sum(value)), by = list(type)]
 gen_inst_type <- gen_inst_type[order(value, decreasing = FALSE)]
 gen_inst_type[, type := factor(type, levels = type, labels = capitalize(type))]
+
 gen_inst_type
 
 ggplot(data = gen_inst_type) +
