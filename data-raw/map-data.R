@@ -56,6 +56,7 @@ saveRDS(europe, file = "dev/europe.rds")
 
 
 
+
 # France departement ------------------------------------------------------
 
 # download.file(
@@ -76,6 +77,13 @@ fra_dept <- spTransform(fra_dept, lam93)
 fra_dept <- fortify(fra_dept, region = "code_insee")
 saveRDS(fra_dept, file = "dev/fra_dept.rds")
 
+# usethis::use_data(fra_dept, internal = TRUE)
+
+
+
+# Use pckg ----------------------------------------------------------------
+
+usethis::use_data(fra_dept, europe, overwrite = TRUE, internal = TRUE)
 
 
 
