@@ -31,6 +31,8 @@ gen_inst_unit <- get_open_api(
 str(gen_inst_unit, max.level = 2)
 gen_inst_unit
 
+autoplot(gen_inst_unit)
+
 code_eic_loc <- readRDS(file = "dev/code_eic_loc.rds")
 
 # Merge location

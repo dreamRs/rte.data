@@ -110,3 +110,17 @@ active_units <- retrieve_active_units()
 autoplot(active_units)
 ```
 
+
+## Generation installed capacities
+
+```{r installed-capacities, fig.height=9}
+inst_cap <- get_open_api(
+  api = "generation_installed_capacities",
+  resource = "capacities_per_production_unit"
+)
+
+autoplot(inst_cap)
+```
+
+
+

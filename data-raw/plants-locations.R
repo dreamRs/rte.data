@@ -35,7 +35,8 @@ saveRDS(object = input_plant_locations, file = "dev/input_plant_locations.rds")
 
 
 pplocations <- copy(input_plant_locations)
-usethis::use_data(pplocations, internal = FALSE, overwrite = TRUE)
+
+# usethis::use_data(pplocations, internal = FALSE, overwrite = TRUE)
 
 
 

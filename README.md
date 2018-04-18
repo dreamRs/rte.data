@@ -102,3 +102,17 @@ autoplot(active_units)
 ```
 
 <img src="images/active-units-1.png" width="864" />
+
+Generation installed capacities
+-------------------------------
+
+``` r
+inst_cap <- get_open_api(
+  api = "generation_installed_capacities",
+  resource = "capacities_per_production_unit"
+)
+
+autoplot(inst_cap)
+```
+
+<img src="images/installed-capacities-1.png" width="864" />

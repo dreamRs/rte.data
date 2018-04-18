@@ -6,10 +6,10 @@ library("data.table")
 library("readxl")
 
 
-download.file(
-  url = "https://clients.rte-france.com/servlets/CodeEICGServlet?type=W",
-  destfile = "data-raw/CodeEIC.xls", mode = "wb"
-)
+# download.file(
+#   url = "https://clients.rte-france.com/servlets/CodeEICGServlet?type=W",
+#   destfile = "data-raw/CodeEIC.xls", mode = "wb"
+# )
 code_eic <- read_xls(path = "data-raw/CodeEIC.xls", skip = 2)
 setDT(code_eic)
 clean <- function(x) {
@@ -24,7 +24,7 @@ setnames(
 code_eic
 # code_eic <- as.data.frame(code_eic)
 
-usethis::use_data(code_eic, internal = FALSE, overwrite = TRUE)
+# usethis::use_data(code_eic, internal = FALSE, overwrite = TRUE)
 
 
 

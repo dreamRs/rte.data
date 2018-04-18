@@ -81,31 +81,33 @@ saveRDS(fra_dept, file = "dev/fra_dept.rds")
 
 
 
-# Use pckg ----------------------------------------------------------------
+# Use data ----------------------------------------------------------------
 
-usethis::use_data(fra_dept, europe, overwrite = TRUE, internal = TRUE)
+# usethis::use_data(fra_dept, europe, overwrite = TRUE, internal = TRUE)
 
 
 
 # Test map ----------------------------------------------------------------
 
-library(ggplot2)
-ggplot() +
-  geom_polygon(
-    data = europe,
-    mapping = aes(x = long, y = lat, group = group),
-    # fill = "grey30", color = "grey"
-    fill = "grey98", color = "grey30"
-  ) +
-  geom_polygon(
-    data = fra_dept,
-    mapping = aes(x = long, y = lat, group = group),
-    fill = "grey98", color = "grey30"
-  ) +
-  coord_equal(
-    xlim = range(fra_dept$long) + abs(range(fra_dept$long)) * c(-0.05, 0.05),
-    ylim = range(fra_dept$lat) + abs(range(fra_dept$long)) * c(-0.05, 0.05)
-  ) +
-  theme_void() +
-  theme(panel.background = element_rect(fill = "lightblue"))
+if (FALSE) {
+  library(ggplot2)
+  ggplot() +
+    geom_polygon(
+      data = europe,
+      mapping = aes(x = long, y = lat, group = group),
+      # fill = "grey30", color = "grey"
+      fill = "grey98", color = "grey30"
+    ) +
+    geom_polygon(
+      data = fra_dept,
+      mapping = aes(x = long, y = lat, group = group),
+      fill = "grey98", color = "grey30"
+    ) +
+    coord_equal(
+      xlim = range(fra_dept$long) + abs(range(fra_dept$long)) * c(-0.05, 0.05),
+      ylim = range(fra_dept$lat) + abs(range(fra_dept$long)) * c(-0.05, 0.05)
+    ) +
+    theme_void() +
+    theme(panel.background = element_rect(fill = "lightblue"))
 
+}

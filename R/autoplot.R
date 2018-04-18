@@ -122,6 +122,12 @@ autoplot.rte.data.table <- function(object, ...) {
 
     plot_p_active_units(object)
 
+  } else if (api_name == "generation_installed_capacities") {
+
+    if (api_resource == "capacities_per_production_unit") {
+      map_installed_capacities(object)
+    }
+
   } else {
     stop("No autoplot defined for this API !", call. = FALSE)
   }
@@ -233,5 +239,87 @@ plot_exchange <- function(object) {
     coord_flip() +
     theme(plot.title = element_text(face = "bold"))
 }
+
+
+
+#' @importFrom data.table first copy
+#' @importFrom ggplot2 ggplot geom_polygon aes_ geom_point
+#'  scale_color_manual guide_legend scale_radius coord_equal
+#'  theme_void theme element_rect element_text margin labs
+#' @importFrom utils data
+map_installed_capacities <- function(object) {
+
+  object <- copy(object)
+
+  # code eic <> location
+  code_eic_loc <- merge(
+    x = code_eic, all.x = TRUE, all.y = FALSE,
+    y = pplocations[, list(eic_parent = eic_code, lat, lon, X, Y)]
+  )
+
+  # installed capacities <> location
+  object <- merge(
+    x = object,
+    y = unique(code_eic_loc[!is.na(lat), list(code_eic = eic_parent, X, Y)]),
+    by = "code_eic", all.x = FALSE, all.y = FALSE
+  )
+
+  # simplify type plant
+  object[, type2 := gsub(pattern = "_.*", replacement = "", x = type)]
+
+  # group by type2 and localisation
+  object <- object[, list(
+    installed_capacity = sum(installed_capacity),
+    name = first(name)
+  ), by = list(type2, X, Y)]
+
+  ggplot() +
+    geom_polygon(
+      data = europe,
+      mapping = aes_(x = ~long, y = ~lat, group = ~group),
+      fill = "#5f799c", color = "#d7dee7"
+      # fill = "grey98", color = "grey30"
+    ) +
+    geom_polygon(
+      data = fra_dept,
+      mapping = aes_(x = ~long, y = ~lat, group = ~group),
+      fill = "#5f799c", color = "#d7dee7"
+      # fill = "grey98", color = "grey30"
+    ) +
+    geom_point(
+      data = object,
+      mapping = aes_(x = ~X, y = ~Y, color = ~type2, size = ~installed_capacity),
+      alpha = 1
+    ) +
+    scale_color_manual(
+      values = c(
+        "HYDRO" = "#58D3F7", #"#2772b2",
+        "NUCLEAR" = "#f8ca4c",
+        "FOSSIL" = "#f30a0a"
+      ),
+      labels = capitalize,
+      name = "Sector",
+      guide = guide_legend(override.aes = list(size = 4))
+    ) +
+    scale_radius(
+      range = c(2, 10), name = "Capacity max.\n(in MW)"
+      # , guide = guide_legend(override.aes = list(size = 1:5))
+    ) +
+    coord_equal(
+      xlim = range(fra_dept$long) + abs(range(fra_dept$long)) * c(-0.05, 0.05),
+      ylim = range(fra_dept$lat) + abs(range(fra_dept$long)) * c(-0.05, 0.05)
+    ) +
+    theme_void() +
+    theme(
+      panel.background = element_rect(fill = "lightblue")
+    ) +
+    labs(
+      title = "Generation Installed Capacities",
+      subtitle = "Only production units of more than 1 MW are shown",
+      fill = NULL, y = NULL, x = NULL, colour = NULL,
+      caption = "https://data.rte-france.com"
+    )
+}
+
 
 
