@@ -231,3 +231,104 @@ dat[name %chin% "TRICASTIN 1"]
 
 autoplot(dat)
 
+
+
+
+
+
+
+
+# Map ---------------------------------------------------------------------
+
+library(rte.data)
+library(data.table)
+library(ggplot2)
+
+fra_dept <- readRDS(file = "dev/fra_dept.rds")
+europe <- readRDS(file = "dev/europe.rds")
+
+
+dat <- retrieve_active_units()
+dat
+
+object <- copy(dat)
+
+
+# add coordinates
+data("code_eic")
+data("pplocations")
+
+# code eic <> location
+code_eic_loc <- merge(
+  x = code_eic, all.x = TRUE, all.y = FALSE,
+  y = pplocations[, list(eic_parent = eic_code, lat, lon, X, Y)]
+)
+
+# installed capacities <> location
+object <- merge(
+  x = object,
+  y = unique(code_eic_loc[!is.na(lat), list(eic_parent, X, Y)]),
+  by = "eic_parent", all.x = FALSE, all.y = FALSE
+)
+
+# simplify type plant
+object[, type2 := gsub(pattern = "_.*", replacement = "", x = type)]
+
+
+
+# group by plant
+object[, active := prod_max > 1]
+object <- object[, list(name = first(name), active = sum(active) / .N, n = .N), by = list(type2, X, Y)]
+object <- object[, name := gsub(pattern = "\\s\\d$", replacement = "", x = name)]
+
+# categories
+object[, active_cat := cut(
+  x = active,
+  breaks = c(-Inf, 0, 0.25, 0.5, 0.75, 1),
+  labels = c("0%", "25%", "50%", "75%", "100%"),
+  include.lowest = TRUE
+)]
+
+
+
+
+ggplot() +
+  geom_polygon(
+    data = europe,
+    mapping = aes_(x = ~long, y = ~lat, group = ~group),
+    fill = "#5f799c", color = "#d7dee7"
+    # fill = "grey98", color = "grey30"
+  ) +
+  geom_polygon(
+    data = fra_dept,
+    mapping = aes_(x = ~long, y = ~lat, group = ~group),
+    fill = "#5f799c", color = "#d7dee7"
+    # fill = "grey98", color = "grey30"
+  ) +
+  geom_point(
+    data = object,
+    mapping = aes_(x = ~X, y = ~Y, color = ~active_cat, shape = ~type2),
+    alpha = 1, size = 5
+  ) +
+  scale_color_manual(
+    values = c("0%" = "#E31A1C", "25%" = "#FB9A99", "50%"= "#FDBF6F", "75%" = "#B2DF8A", "100%" = "#33A02C"),
+    drop = FALSE,
+    guide = guide_legend(title = "% of active units", title.position = "top")
+  ) +
+  scale_shape(
+    name = "Sector", labels = rte.data:::capitalize
+  ) +
+  coord_equal(
+    xlim = range(fra_dept$long) + abs(range(fra_dept$long)) * c(-0.05, 0.05),
+    ylim = range(fra_dept$lat) + abs(range(fra_dept$long)) * c(-0.05, 0.05)
+  ) +
+  theme_void() +
+  theme(
+    panel.background = element_rect(fill = "lightblue")
+  ) +
+  labs(
+    title = "Active units",
+    subtitle = "Only production units of more than 1 MW are shown",
+    fill = NULL, y = NULL, x = NULL, colour = NULL,
+    caption = "https://data.rte-france.com"
+  )
