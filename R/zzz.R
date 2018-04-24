@@ -4,4 +4,4 @@ utils::globalVariables(c(".id", ".N", "start_date", "end_date", "updated_date",
                          "production_type", "group", ".SD",
                          "country", "flow", "sender_country_name",
                          "eic_code", "eic_parent", "installed_capacity", "n", "name", "prod_max", "variable",
-                         "lat", "lon", "X", "Y", "type2"))
+                         "lat", "lon", "X", "Y", "type2", "active_cat", "active"))

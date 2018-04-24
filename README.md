@@ -103,6 +103,14 @@ autoplot(active_units)
 
 <img src="images/active-units-1.png" width="864" />
 
+or see on a map :
+
+``` r
+autoplot(active_units, map = TRUE)
+```
+
+<img src="images/active-units-map-1.png" width="864" />
+
 Generation installed capacities
 -------------------------------
 

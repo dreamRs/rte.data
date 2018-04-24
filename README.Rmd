@@ -105,9 +105,15 @@ autoplot(prod_type_30, by_day = TRUE)
 
 ## Active production units 
 
-```{r active-units}
+```{r active-units, fig.height=6}
 active_units <- retrieve_active_units()
 autoplot(active_units)
+```
+
+or see on a map :
+
+```{r active-units-map, fig.height=9}
+autoplot(active_units, map = TRUE)
 ```
 
 

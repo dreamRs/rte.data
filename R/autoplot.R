@@ -53,7 +53,12 @@ autoplot.rte.data.table <- function(object, ...) {
 
   } else if (api_name == "retrieve_active_units") {
 
-    plot_p_active_units(object)
+    if (!is.null(args$map) && args$map) {
+      map_p_active_units(object)
+    } else {
+      plot_p_active_units(object)
+    }
+
 
   } else if (api_name == "generation_installed_capacities") {
 

@@ -231,7 +231,7 @@ dat[name %chin% "TRICASTIN 1"]
 
 autoplot(dat)
 
-
+autoplot(dat, map = TRUE)
 
 
 
