@@ -13,6 +13,7 @@
 #' @description Quick \code{ggplot} to explore data
 #'
 #' @param object a \code{rte.data.table} obtained from the API.
+#' @param interactive Logical, produce an interactive visualisation.
 #' @param ... other arguments passed to specific methods
 #'
 #' @return A ggplot object.
@@ -21,7 +22,7 @@
 #'
 #' @examples
 #' # todo
-autoplot.rte.data.table <- function(object, ...) {
+autoplot.rte.data.table <- function(object, interactive = FALSE, ...) {
   api_name <- attr(object, "api.name")
   api_resource <- attr(object, "api.resource")
 
@@ -32,38 +33,73 @@ autoplot.rte.data.table <- function(object, ...) {
 
   if (api_name == "consumption") {
 
-    plot_consumption(object)
+    if (interactive) {
+      viz_consumption(object)
+    } else {
+      plot_consumption(object)
+    }
 
   } else if (api_name == "physical_flow") {
 
 
     if (!is.null(args$by_country) && args$by_country) {
-      plot_exchange(object)
+      if (interactive) {
+        viz_exchange(object)
+      } else {
+        plot_exchange(object)
+      }
     } else {
-      plot_balance(object)
+      if (interactive) {
+        viz_balance(object)
+      } else {
+        plot_balance(object)
+      }
     }
 
   } else if (api_name == "actual_generation") {
 
     if (api_resource == "actual_generations_per_production_type") {
 
-      plot_actual_generation(object, by_day = args$by_day)
+      if (interactive) {
+        viz_actual_generation(object, by_day = args$by_day)
+      } else {
+        plot_actual_generation(object, by_day = args$by_day)
+      }
+
 
     }
 
   } else if (api_name == "retrieve_active_units") {
 
     if (!is.null(args$map) && args$map) {
-      map_p_active_units(object)
+
+      if (interactive) {
+        imap_p_active_units(object)
+      } else {
+        map_p_active_units(object)
+      }
+
     } else {
-      plot_p_active_units(object)
+
+      if (interactive) {
+        viz_p_active_units(object)
+      } else {
+        plot_p_active_units(object)
+      }
+
     }
 
 
   } else if (api_name == "generation_installed_capacities") {
 
     if (api_resource == "capacities_per_production_unit") {
-      map_installed_capacities(object)
+
+      if (interactive) {
+        imap_installed_capacities(object)
+      } else {
+        map_installed_capacities(object)
+      }
+
     }
 
   } else {

@@ -33,12 +33,14 @@ library( rte.data )
 # commercial balance for France on electricity market
 balance <- get_physical_flows(start_date = "2018-02-01", end_date = "2018-03-15")
 str(balance)
+
 autoplot(balance)
+autoplot(balance, interactive = TRUE)
 
 
 # Exchange by countries
 autoplot(balance, by_country = TRUE)
-
+autoplot(balance, by_country = TRUE, interactive = TRUE)
 
 
 

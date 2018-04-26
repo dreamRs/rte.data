@@ -1,5 +1,8 @@
 
-# Plot consumtion forecast from `get_consumption`
+# ggplot2 plots ----
+
+
+# Plot consumption forecast from `get_consumption`
 
 #' @importFrom ggplot2 ggplot geom_line aes_ labs scale_x_datetime
 #'  scale_color_brewer theme_minimal theme element_text waiver

@@ -35,7 +35,7 @@ prod_type <- get_actual_generation("actual_generations_per_production_type")
 prod_type
 
 autoplot(prod_type)
-
+autoplot(prod_type, interactive = TRUE)
 
 
 # Data since early 2018
@@ -57,6 +57,7 @@ prod_type_30 <- get_actual_generation(
 prod_type_30
 
 autoplot(prod_type_30, by_day = TRUE)
+autoplot(prod_type_30, by_day = TRUE, interactive = TRUE)
 
 
 

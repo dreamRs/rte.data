@@ -4,10 +4,12 @@
 \alias{autoplot.rte.data.table}
 \title{Autplot method}
 \usage{
-\method{autoplot}{rte.data.table}(object, ...)
+\method{autoplot}{rte.data.table}(object, interactive = FALSE, ...)
 }
 \arguments{
 \item{object}{a \code{rte.data.table} obtained from the API.}
+
+\item{interactive}{Logical, produce an interactive visualisation.}
 
 \item{...}{other arguments passed to specific methods}
 }
