@@ -6,30 +6,6 @@
 #'  bb_color bb_x_axis bb_y_grid bb_x_grid bb_legend bb_zoom bb_labs
 viz_consumption <- function(object) {
 
-  range_date <- function(x) {
-    x <- unique(format(x, format = "%Y-%m-%d"))
-    x <- sort(x)
-    if (length(x) == 1) {
-      return(x)
-    } else {
-      return(NULL) # paste(range(x), collapse = " - ")
-    }
-  }
-
-  format_date <- function(x) {
-    dd <- difftime(
-      time1 = max(x, na.rm = TRUE),
-      time2 = min(x, na.rm = TRUE),
-      units = "days"
-    )
-    dd <- as.numeric(dd)
-    if (dd < 1.1) {
-      return("%H:%M")
-    } else {
-      return("%Y-%m-%d %H:%M")
-    }
-  }
-
   billboarder(data = object) %>%
     bb_linechart(mapping = bbaes_string(x = "start_date", y = "value", group = "type")) %>%
     bb_color(palette = c("#E41A1C", "#377EB8", "#4DAF4A",
@@ -194,6 +170,10 @@ viz_actual_generation <- function(object, by_day = NULL) {
       "WASTE" = "#61380B",
       "WIND_ONSHORE" = "#74cdb9"
     ) %>%
+    bb_x_axis(tick = list(
+      format = format_date(object$start_date),
+      fit = FALSE, multiline = TRUE, width = 72
+    )) %>%
     bb_y_grid(show = TRUE) %>%
     bb_x_grid(show = TRUE) %>%
     bb_legend(
@@ -399,3 +379,31 @@ imap_p_active_units <- function(object) {
       labels = c("0%", "25%", "50%", "75%", "100%"), title = "% active units", opacity = 1
     )
 }
+
+
+
+
+range_date <- function(x) {
+  x <- unique(format(x, format = "%Y-%m-%d"))
+  x <- sort(x)
+  if (length(x) == 1) {
+    return(x)
+  } else {
+    return(NULL) # paste(range(x), collapse = " - ")
+  }
+}
+
+format_date <- function(x) {
+  dd <- difftime(
+    time1 = max(x, na.rm = TRUE),
+    time2 = min(x, na.rm = TRUE),
+    units = "days"
+  )
+  dd <- as.numeric(dd)
+  if (dd < 1.1) {
+    return("%H:%M")
+  } else {
+    return("%Y-%m-%d %H:%M")
+  }
+}
+

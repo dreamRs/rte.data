@@ -60,4 +60,16 @@ autoplot(prod_type_30, by_day = TRUE)
 autoplot(prod_type_30, by_day = TRUE, interactive = TRUE)
 
 
+# Last 7 days
+prod_type_7 <- get_actual_generation(
+  resource = "actual_generations_per_production_type",
+  start_date = Sys.Date() - 7, end_date = Sys.Date()
+)
+prod_type_7
+
+autoplot(prod_type_7, by_day = TRUE)
+autoplot(prod_type_7, by_day = TRUE, interactive = TRUE)
+
+autoplot(prod_type_7, by_day = FALSE, interactive = TRUE)
+
 
