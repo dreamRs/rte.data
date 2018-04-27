@@ -261,7 +261,7 @@ imap_installed_capacities <- function(object) {
 
   # group by type2 and localisation
   object <- object[, list(
-    installed_capacity = sum(installed_capacity),
+    installed_capacity = sum(installed_capacity), n = .N,
     name = gsub(pattern = "\\s\\d$", replacement = "", x = first(name))
   ), by = list(type, lat, lon)]
 
@@ -280,7 +280,9 @@ imap_installed_capacities <- function(object) {
       lng = ~lon, lat = ~lat,
       popup = ~paste0(
         "<b>", name, "</b>", "<br>",
-        "Installed capacity: ", format(installed_capacity, big.mark = ",", digits = 0, format = "f"), "MW"
+        "Installed capacity: ", format(installed_capacity, big.mark = ",", digits = 0, format = "f"), "MW",
+        "<br>",
+        "Number of units: ", n
       ),
       radius = ~rescale(installed_capacity, to = c(8, 20)),
       color = ~pal(type),
@@ -334,8 +336,6 @@ imap_p_active_units <- function(object) {
     labels = c("0%", "25%", "50%", "75%", "100%"),
     include.lowest = TRUE
   )]
-
-
 
   getColor <- function(x) {
     cols <- c(
