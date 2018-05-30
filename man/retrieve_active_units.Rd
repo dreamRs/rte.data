@@ -4,12 +4,16 @@
 \alias{retrieve_active_units}
 \title{Retrieve generation per unit}
 \usage{
-retrieve_active_units(start_date = NULL, end_date = NULL)
+retrieve_active_units(start_date = NULL, end_date = NULL, tokens = list())
 }
 \arguments{
 \item{start_date}{Optional, starting date to filter results.}
 
 \item{end_date}{Optional, ending date to filter results.}
+
+\item{tokens}{Optional, a \code{list} of length 2 with tokens
+for \code{actual_generation} and \code{generation_installed_capacities} APIs (in this order).
+Can be a named list to match concerned API.}
 }
 \value{
 a \code{data.table}

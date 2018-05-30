@@ -3,6 +3,9 @@
 #'
 #' @param start_date Optional, starting date to filter results.
 #' @param end_date Optional, ending date to filter results.
+#' @param tokens Optional, a \code{list} of length 2 with tokens
+#'  for \code{actual_generation} and \code{generation_installed_capacities} APIs (in this order).
+#'  Can be a named list to match concerned API.
 #'
 #' @return a \code{data.table}
 #' @export
@@ -20,18 +23,28 @@
 #'
 #' }
 #' @importFrom data.table setattr
-retrieve_active_units <- function(start_date = NULL, end_date = NULL) {
+retrieve_active_units <- function(start_date = NULL, end_date = NULL, tokens = list()) {
+
+  if (length(tokens) > 1) {
+    if (!is.null(names(tokens))) {
+      tokens <- tokens[c("actual_generation", "generation_installed_capacities")]
+    } else {
+      names(tokens)[1:2] <- c("actual_generation", "generation_installed_capacities")
+    }
+  }
 
   # actual generation per units
   prod_unit <- get_actual_generation(
     resource = "actual_generations_per_unit",
-    start_date = start_date, end_date = end_date
+    start_date = start_date, end_date = end_date,
+    token = tokens$actual_generation
   )
 
   # installed capacities per units
   gen_inst_unit <- get_open_api(
     api = "generation_installed_capacities",
-    resource = "capacities_per_production_unit"
+    resource = "capacities_per_production_unit",
+    token = tokens$generation_installed_capacities
   )
 
   # corresp code eic
