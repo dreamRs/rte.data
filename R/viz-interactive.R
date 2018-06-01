@@ -222,8 +222,8 @@ viz_p_active_units <- function(object) {
       stacked = TRUE, rotated = TRUE
     ) %>%
     bb_colors_manual(
-      "stopped" = "firebrick",
-      "working" = "forestgreen"
+      "stopped" = "#d64430",
+      "working" = "#76b22d"
     ) %>%
     bb_y_grid(show = TRUE) %>%
     bb_y_axis(tick = list(format = suffix("%")), padding = 0) %>%
