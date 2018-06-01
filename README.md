@@ -17,7 +17,7 @@ Installation (from Github) :
 source("https://install-github.me/dreamRs/rte.data")
 
 # or
-devtools::installl_github("dreamRs/rte.data")
+devtools::install_github("dreamRs/rte.data")
 ```
 
 Authentication
