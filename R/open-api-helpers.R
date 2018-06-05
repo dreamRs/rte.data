@@ -44,7 +44,7 @@ get_consumption <- function(resource = c("short_term", "weekly_forecast", "annua
     resource = resource,
     start_date = start_date,
     end_date = end_date,
-    q = list(type = paste(type, collapse = ",")),
+    q = list(type = I(paste(type, collapse = ","))),
     token = token,
     raw = raw
   )
