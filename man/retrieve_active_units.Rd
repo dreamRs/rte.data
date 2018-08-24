@@ -4,7 +4,8 @@
 \alias{retrieve_active_units}
 \title{Retrieve generation per unit}
 \usage{
-retrieve_active_units(start_date = NULL, end_date = NULL, tokens = list())
+retrieve_active_units(start_date = NULL, end_date = NULL,
+  tokens = list())
 }
 \arguments{
 \item{start_date}{Optional, starting date to filter results.}

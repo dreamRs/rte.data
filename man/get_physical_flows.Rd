@@ -4,8 +4,8 @@
 \alias{get_physical_flows}
 \title{Retrieve physical flows data}
 \usage{
-get_physical_flows(code_eic = NULL, start_date = NULL, end_date = NULL,
-  token = NULL, raw = FALSE)
+get_physical_flows(code_eic = NULL, start_date = NULL,
+  end_date = NULL, token = NULL, raw = FALSE)
 }
 \arguments{
 \item{code_eic}{Optional, EIC code of the desired country.}
