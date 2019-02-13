@@ -2,10 +2,10 @@
 # manipulate dates
 parse_datetime <- function(x) {
   x <- gsub(pattern = "(\\d{2}):(\\d{2})$", replacement = "\\1\\2", x = x)
-  as.POSIXct(x, format = "%FT%X%z")
+  as.POSIXct(x, format = "%Y-%m-%dT%H:%M:%S%z")
 }
 format_datetime <- function(x) {
-  x <- format(x, format = "%FT%X%z")
+  x <- format(x, format = "%Y-%m-%dT%H:%M:%S%z")
   gsub(pattern = "(\\d{2})(\\d{2})$", replacement = "\\1:\\2", x = x)
 }
 
