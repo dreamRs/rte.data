@@ -1,7 +1,7 @@
 ---
 output: rmarkdown::github_document
 ---
-```{r, echo = FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(
   collapse=  TRUE, 
   comment = "##",
