@@ -21,5 +21,6 @@ Imports:
     scales,
     billboarder,
     leaflet,
-    htmltools
+    htmltools,
+    base64enc
 RoxygenNote: 6.1.1

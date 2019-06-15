@@ -13,6 +13,7 @@
 #' @importFrom jsonlite fromJSON base64_enc
 #' @importFrom curl ie_get_proxy_for_url
 #' @importFrom crul HttpClient proxy
+#' @importFrom base64enc base64encode
 #'
 #' @examples
 #' \dontrun{
@@ -31,7 +32,7 @@
 #' }
 get_token <- function(key, user = NULL, proxy_pwd = NULL) {
   if (is.list(key))
-    key <- jsonlite::base64_enc(charToRaw(paste(key$id_client, key$id_secret, sep = ":")))
+    key <- base64enc::base64encode(charToRaw(paste(key$id_client, key$id_secret, sep = ":")))
   cli <- crul::HttpClient$new(
     url = get_url("url.auth"),
     headers = list(
