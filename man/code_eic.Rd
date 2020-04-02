@@ -4,7 +4,8 @@
 \name{code_eic}
 \alias{code_eic}
 \title{EIC code table}
-\format{A data.table with 158 rows and 6 variables:
+\format{
+A data.table with 158 rows and 6 variables:
 \describe{
 \item{code_eic}{EIC code}
 \item{nom_affiche}{Id of the plant}
@@ -13,7 +14,8 @@
 \item{eic_responsible_party}{Eesponsible entity EIC code}
 \item{pays}{Country}
 \item{fonction}{Type of unit}
-}}
+}
+}
 \usage{
 code_eic
 }

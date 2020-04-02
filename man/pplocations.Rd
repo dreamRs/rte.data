@@ -4,14 +4,16 @@
 \name{pplocations}
 \alias{pplocations}
 \title{Power Plants Locations}
-\format{A data.table with 158 rows and 6 variables:
+\format{
+A data.table with 158 rows and 6 variables:
 \describe{
 \item{name}{Name of the power plant}
 \item{eic_code}{EIC code}
 \item{lat}{Latitude}
 \item{lon}{Longitude}
 \item{X,Y}{Coordinates in Lambert93}
-}}
+}
+}
 \usage{
 pplocations
 }

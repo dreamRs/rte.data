@@ -4,9 +4,14 @@
 \alias{get_consumption}
 \title{Retrieve consumption data}
 \usage{
-get_consumption(resource = c("short_term", "weekly_forecast",
-  "annual_forecast"), type = c("REALISED", "ID", "D-1", "D-2"),
-  start_date = NULL, end_date = NULL, token = NULL, raw = FALSE)
+get_consumption(
+  resource = c("short_term", "weekly_forecasts", "annual_forecasts"),
+  type = c("REALISED", "ID", "D-1", "D-2"),
+  start_date = NULL,
+  end_date = NULL,
+  token = NULL,
+  raw = FALSE
+)
 }
 \arguments{
 \item{resource}{Which ressource to use between \code{short_term}

@@ -4,11 +4,14 @@
 \alias{get_actual_generation}
 \title{Retrieve actual generation data}
 \usage{
-
-  get_actual_generation(resource = c("actual_generations_per_production_type",
-  "actual_generations_per_unit", "water_reserves",
-  "generation_mix_15min_time_scale"), start_date = NULL,
-  end_date = NULL, token = NULL, raw = FALSE)
+get_actual_generation(
+  resource = c("actual_generations_per_production_type", "actual_generations_per_unit",
+    "water_reserves", "generation_mix_15min_time_scale"),
+  start_date = NULL,
+  end_date = NULL,
+  token = NULL,
+  raw = FALSE
+)
 }
 \arguments{
 \item{resource}{Which ressource to use between \code{actual_generations_per_production_type}

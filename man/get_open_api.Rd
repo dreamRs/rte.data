@@ -4,8 +4,15 @@
 \alias{get_open_api}
 \title{Retrieve data from an open API}
 \usage{
-get_open_api(api, resource, start_date = NULL, end_date = NULL,
-  q = list(), token = NULL, raw = FALSE)
+get_open_api(
+  api,
+  resource,
+  start_date = NULL,
+  end_date = NULL,
+  q = list(),
+  token = NULL,
+  raw = FALSE
+)
 }
 \arguments{
 \item{api}{Name of main API.}

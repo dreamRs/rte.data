@@ -33,7 +33,7 @@
 #' consumption <- get_consumption("short_term", token = token)
 #'
 #' }
-get_consumption <- function(resource = c("short_term", "weekly_forecast", "annual_forecast"),
+get_consumption <- function(resource = c("short_term", "weekly_forecasts", "annual_forecasts"),
                             type = c("REALISED", "ID", "D-1", "D-2"),
                             start_date = NULL, end_date = NULL, token = NULL, raw = FALSE) {
 
