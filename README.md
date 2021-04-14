@@ -1,13 +1,15 @@
 
 # rte.data
 
-> Access data from RTE data portal
+> Access data from [RTE data portal](https://data.rte-france.com/)
 
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
-public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
+<!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Travis build
 status](https://travis-ci.org/dreamRs/rte.data.svg?branch=master)](https://travis-ci.org/dreamRs/rte.data)
+<!-- badges: end -->
 
 ## Overview
 
@@ -19,10 +21,7 @@ with `rte.data`.
 Installation (from Github) :
 
 ``` r
-source("https://install-github.me/dreamRs/rte.data")
-
-# or
-devtools::install_github("dreamRs/rte.data")
+remotes::install_github("dreamRs/rte.data")
 ```
 
 ## Authentication
