@@ -9,6 +9,7 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Travis build
 status](https://travis-ci.org/dreamRs/rte.data.svg?branch=master)](https://travis-ci.org/dreamRs/rte.data)
+[![R-CMD-check](https://github.com/dreamRs/rte.data/workflows/R-CMD-check/badge.svg)](https://github.com/dreamRs/rte.data/actions)
 <!-- badges: end -->
 
 ## Overview

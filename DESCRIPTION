@@ -1,10 +1,10 @@
 Package: rte.data
 Version: 0.1.2
-Title: Access RTE Data Api
+Title: Access RTE Data API
 Description: RTE (french electricity transmission system operator) 
   provides access to a wide range of data via APIs available on its 
   data portal (https://data.rte-france.com).
-Authors@R: c(person("Fanny", "Meyer", email = "fanny.meyer@dreamrs.fr", role = c("aut")),
+Authors@R: c(person("Fanny", "Meyer", role = "aut"),
   person("Victor", "Perrier", email = "victor.perrier@dreamrs.fr", role = c("aut", "cre")))
 License: MIT + file LICENSE
 Encoding: UTF-8
