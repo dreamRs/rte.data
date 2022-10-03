@@ -112,7 +112,7 @@ autoplot(prod_type_30, by_day = TRUE)
 ## Active production units 
 
 ```{r active-units, fig.height=6}
-active_units <- retrieve_active_units()
+active_units <- retrieve_active_units(start_date = Sys.Date() - 2, end_date = Sys.Date())
 autoplot(active_units)
 ```
 

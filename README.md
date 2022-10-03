@@ -82,6 +82,9 @@ countries.
 ``` r
 balance <- get_physical_flows(start_date = Sys.Date() - 60, end_date = Sys.Date())
 autoplot(balance)
+## Warning in as.data.table.list(x, keep.rownames = keep.rownames, check.names
+## = check.names, : Item 4 has 4 rows but longest item has 18; recycled with
+## remainder.
 ```
 
 <img src="images/balance-1.png" width="864" />
@@ -112,7 +115,7 @@ autoplot(prod_type_30, by_day = TRUE)
 ## Active production units
 
 ``` r
-active_units <- retrieve_active_units()
+active_units <- retrieve_active_units(start_date = Sys.Date() - 2, end_date = Sys.Date())
 autoplot(active_units)
 ```
 
